@@ -102,10 +102,10 @@ supported_extensions = [
     : `# Protocol extensions configuration
 # Extensions that the translator supports (will request if required by server)
 # Example: supported_extensions = [0x0002, 0x0003]
-#supported_extensions = [
+supported_extensions = [
 #    0x0002,  # Worker-Specific Hashrate Tracking
-#]
-#`;
+]
+`;
 
   const requiredExtensionsBlock = useJdc
     ? `# Extensions that the translator requires (server must support these)
@@ -116,10 +116,10 @@ required_extensions = [
 `
     : `# Extensions that the translator requires (server must support these)
 # If the upstream server doesn't support these, the translator will fail over to another upstream
-#required_extensions = [
+required_extensions = [
 #    0x0002,  # Worker-Specific Hashrate Tracking
-#]
-#`;
+]
+`;
 
   return processConfigTemplate(TRANSLATOR_CONFIG_TEMPLATE, {
     USER_IDENTITY: data.userIdentity || DEFAULT_CONFIG_VALUES.defaultUserIdentity,
