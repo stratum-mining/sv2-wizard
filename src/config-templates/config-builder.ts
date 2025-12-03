@@ -22,7 +22,7 @@ import { getPoolConfig } from './pools';
  */
 export function buildJdClientConfig(data: ConfigTemplateData): string {
   const network = data.network || 'mainnet';
-  const selectedPoolConfig = getPoolConfig(data.selectedPool);
+  const selectedPoolConfig = getPoolConfig(data.selectedPool, network);
   const jdcPoolAddress = selectedPoolConfig?.address || DEFAULT_CONFIG_VALUES.localhost;
   const jdcPoolPort = selectedPoolConfig?.port || DEFAULT_CONFIG_VALUES.poolPort;
   const jdcJdsAddress = selectedPoolConfig?.jdsAddress || DEFAULT_CONFIG_VALUES.localhost;
@@ -69,7 +69,8 @@ export function buildTranslatorConfig(data: ConfigTemplateData, options?: {
     // Connecting to pool (pool templates)
     // In full stack: connects to local pool (127.0.0.1:34254)
     // In pool connection: connects to selected external pool
-    const poolConfig = getPoolConfig(data.selectedPool);
+    const network = data.network || 'mainnet';
+    const poolConfig = getPoolConfig(data.selectedPool, network);
     if (poolConfig) {
       // External pool (pool connection wizard)
       upstreamAddress = poolConfig.address;

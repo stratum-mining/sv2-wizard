@@ -34,7 +34,8 @@ export const TranslatorProxyConfigForm = ({ data, updateData, onContinue }: any)
   const [sharesPerMinute, setSharesPerMinute] = useState(data.clientSharesPerMinute || 6.0);
   
   // Get pool's authority pubkey if pool is selected, otherwise use default
-  const selectedPoolConfig = useMemo(() => getPoolConfig(data?.selectedPool), [data?.selectedPool]);
+  const network = (data?.selectedNetwork || data?.network || "mainnet") as 'mainnet' | 'testnet4' | 'signet';
+  const selectedPoolConfig = useMemo(() => getPoolConfig(data?.selectedPool, network), [data?.selectedPool, network]);
   const defaultAuthorityPubkey = selectedPoolConfig?.authorityPubkey || DEFAULT_AUTHORITY_PUBLIC_KEY;
   const [upstreamAuthorityPubkey, setUpstreamAuthorityPubkey] = useState(
     data?.tproxyUpstreamAuthorityPubkey || defaultAuthorityPubkey

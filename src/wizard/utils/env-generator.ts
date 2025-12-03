@@ -20,7 +20,7 @@ const wrapAddressInAddr = (address: string): string => {
 export const generateEnvFile = (data: any, socketPath: string): string => {
   const network = (data?.selectedNetwork || "mainnet") as 'mainnet' | 'testnet4' | 'signet';
   const coreRpcPort = getRpcPort(network);
-  const selectedPoolConfig = getPoolConfig(data?.selectedPool);
+  const selectedPoolConfig = getPoolConfig(data?.selectedPool, network);
   // Use pool's authority pubkey if available, otherwise default
   const authorityPubkey = selectedPoolConfig?.authorityPubkey || DEFAULT_AUTHORITY_PUBLIC_KEY;
   const constructTemplates = data?.constructTemplates !== false;
@@ -89,7 +89,8 @@ BITCOIN_SOCKET_PATH=${socketPath}
  */
 export const generatePoolConnectionEnvFile = (data: any, socketPath?: string): string => {
   const needsSocketPath = !!socketPath;
-  const selectedPoolConfig = getPoolConfig(data?.selectedPool);
+  const network = (data?.selectedNetwork || "mainnet") as 'mainnet' | 'testnet4' | 'signet';
+  const selectedPoolConfig = getPoolConfig(data?.selectedPool, network);
   // Use pool's authority pubkey if available, otherwise default
   const poolAuthorityPubkey = selectedPoolConfig?.authorityPubkey || DEFAULT_AUTHORITY_PUBLIC_KEY;
   
