@@ -10,7 +10,22 @@ import { DEFAULT_AUTHORITY_PUBLIC_KEY, getPoolConfig } from "../../config-templa
 
 export const TranslatorProxyConfigForm = ({ data, updateData, onContinue }: any) => {
   const [userIdentity, setUserIdentity] = useState(data.userIdentity || "");
-  const [minIndividualMinerHashrate, setMinIndividualMinerHashrate] = useState(data.minIndividualMinerHashrate || 10000000000000.0);
+  
+  // Convert H/s to Th/s for display (1 Th/s = 1e12 H/s)
+  const convertHashesToTerahashes = (hashesPerSecond: number): number => {
+    return hashesPerSecond / 1e12;
+  };
+  
+  // Convert Th/s to H/s for storage (1 Th/s = 1e12 H/s)
+  const convertTerahashesToHashes = (terahashesPerSecond: number): number => {
+    return terahashesPerSecond * 1e12;
+  };
+  
+  // Initialize with Th/s value (convert from H/s if exists, otherwise default to 100 Th/s)
+  const initialHashrateH = data.minIndividualMinerHashrate || 10000000000000.0; // Default: 100 Th/s in H/s
+  const initialHashrateTh = convertHashesToTerahashes(initialHashrateH);
+  const [minIndividualMinerHashrateTh, setMinIndividualMinerHashrateTh] = useState(initialHashrateTh);
+  
   // Default aggregate_channels: true for non-JD (pool templates), false for JD (constructing templates)
   // If constructTemplates is true (JD), default to false. Otherwise default to true (non-JD).
   const constructTemplates = data?.constructTemplates;
@@ -28,9 +43,11 @@ export const TranslatorProxyConfigForm = ({ data, updateData, onContinue }: any)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // Convert Th/s to H/s before storing
+    const minIndividualMinerHashrateH = convertTerahashesToHashes(minIndividualMinerHashrateTh);
     updateData({ 
       userIdentity,
-      minIndividualMinerHashrate,
+      minIndividualMinerHashrate: minIndividualMinerHashrateH,
       aggregateChannels,
       clientSharesPerMinute: sharesPerMinute,
       tproxyUpstreamAuthorityPubkey: upstreamAuthorityPubkey
@@ -83,18 +100,18 @@ export const TranslatorProxyConfigForm = ({ data, updateData, onContinue }: any)
             className="space-y-4 pt-4"
           >
             <div className="space-y-2">
-              <Label htmlFor="minIndividualMinerHashrate">Min Individual Miner Hashrate (H/s)</Label>
+              <Label htmlFor="minIndividualMinerHashrate">Min Individual Miner Hashrate (Th/s)</Label>
               <Input 
                 id="minIndividualMinerHashrate" 
                 type="number"
                 step="0.1"
-                placeholder="10000000000000" 
-                value={minIndividualMinerHashrate} 
-                onChange={(e) => setMinIndividualMinerHashrate(parseFloat(e.target.value) || 0)}
+                placeholder="100" 
+                value={minIndividualMinerHashrateTh} 
+                onChange={(e) => setMinIndividualMinerHashrateTh(parseFloat(e.target.value) || 0)}
                 className="bg-black/20 border-white/10"
               />
               <p className="text-xs text-muted-foreground">
-                Minimum hashrate threshold for individual miners, expressed in H/s (hash per second). Example: 100Th/s = 100.000.000.000.000 H/s (enter as 10000000000000)
+                Minimum hashrate threshold for individual miners, expressed in Th/s.
               </p>
             </div>
 
