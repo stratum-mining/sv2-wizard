@@ -49,8 +49,10 @@ export const BitcoinSetupContent = ({
         return networkSocket.path;
     }
   };
-  // Start with empty value so placeholder shows default but user must enter path
-  const [socketPath, setSocketPath] = useState(data?.bitcoinSocketPath || "");
+  // Initialize with saved path or default path for selected OS
+  const [socketPath, setSocketPath] = useState(
+    data?.bitcoinSocketPath || getDefaultPath(selectedOS)
+  );
   // Reset nodeStarted to false when component mounts to ensure confirmation button always shows
   const [nodeStarted, setNodeStarted] = useState(false);
   const startNodeCommand = network === "mainnet" 
@@ -226,7 +228,10 @@ rpcallowip=0.0.0.0/0`}
                 Operating System
               </Label>
               <Select value={selectedOS} onValueChange={(value) => {
-                setSelectedOS(value as OperatingSystem);
+                const newOS = value as OperatingSystem;
+                setSelectedOS(newOS);
+                // Update socket path to default for new OS if not already customized
+                setSocketPath(getDefaultPath(newOS));
               }}>
                 <SelectTrigger id="osSelect" className="bg-black/30 border-2 border-white/30 text-white focus:border-primary focus:ring-2 focus:ring-primary/50 hover:border-white/50 hover:bg-black/40">
                   <SelectValue />
