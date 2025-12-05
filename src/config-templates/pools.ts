@@ -12,9 +12,8 @@
  *   - Non-JD mode only (uses pool's templates)
  *   - Leading mining pool provider
  * 
- * - demand: Demand Pool (mainnet only)
+ * - demand: DMND Pool (mainnet only)
  *   - Supports both JD and non-JD modes
- *   - Work in progress
  */
 
 import type { PoolConfig } from './types';
@@ -52,7 +51,7 @@ export const POOLS: Record<string, PoolConfig> = {
     }
   },
   demand: {
-    name: "DEMAND",
+    name: "DMND",
     address: "127.0.0.1", // Placeholder - update when available
     port: 34254,
     authorityPubkey: "9auqWEzQDVyd2oe1JVGFLMLHZtCo2FFqZwtKA5gd9xbuEu7PH72", // Placeholder

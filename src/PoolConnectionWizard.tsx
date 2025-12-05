@@ -14,7 +14,7 @@
  * Available pools:
  * - SRI Community Pool: mainnet & testnet4
  * - Braiins Pool: mainnet (non-JD only)
- * - Demand Pool: mainnet (JD or non-JD)
+ * - DMND Pool: mainnet (JD or non-JD)
  */
 
 import { Wizard, WizardConfig } from "./components/ui/wizard-framework";
@@ -103,16 +103,14 @@ const POOL_CONNECTION_WIZARD_CONFIG: WizardConfig = {
         },
         { 
           id: 'pool_demand', 
-          label: "DEMAND", 
-          subLabel: "Work in progress", 
+          label: "DMND",  
           value: "demand", 
           nextStepId: "jd_client_configuration", 
           icon: Zap,
           iconUrl: getPoolConfig("demand")?.iconUrl,
-          badge: "Soon",
-          badgeColor: "orange",
-          warning: "This option is coming soon",
-          disabled: true
+          warning: "Pool for registered businesses only at the moment",
+          disabled: true,
+          url: "https://dmnd.work/"
         }
       ]
     },
@@ -165,16 +163,14 @@ const POOL_CONNECTION_WIZARD_CONFIG: WizardConfig = {
         },
         { 
           id: 'pool_demand', 
-          label: "DEMAND", 
-          subLabel: "Work in progress", 
+          label: "DMND",
           value: "demand", 
           nextStepId: "translator_proxy_configuration", 
           icon: Zap,
           iconUrl: getPoolConfig("demand")?.iconUrl,
-          badge: "Soon",
-          badgeColor: "orange",
-          warning: "Coming soon",
-          disabled: true
+          warning: "Pool for registered businesses only at the moment",
+          disabled: true,
+          url: "https://dmnd.work/"
         }
       ]
     },

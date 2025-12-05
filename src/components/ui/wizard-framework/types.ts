@@ -17,6 +17,7 @@ export interface WizardOption {
   badgeColor?: "green" | "orange" | "blue" | "default";
   warning?: string;
   disabled?: boolean;
+  url?: string; // URL to open when option is clicked (for disabled options)
 }
 
 export interface WizardStep {

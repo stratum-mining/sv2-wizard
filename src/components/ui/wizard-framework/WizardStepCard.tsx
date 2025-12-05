@@ -38,19 +38,22 @@ export const WizardStepCard: React.FC<WizardStepCardProps> = ({
           {step.options?.map((option) => {
             const Icon = getIcon(option.iconName, option.icon);
             const isDisabled = option.disabled;
+            const hasUrl = !!option.url;
+            const Component = isDisabled && hasUrl ? 'div' : 'button';
             return (
-              <button
+              <Component
                 key={option.value}
-                type="button"
-                disabled={isDisabled}
+                {...(Component === 'button' ? { type: 'button', disabled: isDisabled } : {})}
                 onClick={() => {
                   if (!isDisabled) {
                     onOptionSelect(option.nextStepId, option.value);
+                  } else if (hasUrl) {
+                    window.open(option.url, '_blank', 'noopener,noreferrer');
                   }
                 }}
                 className={cn(
                   "group relative flex flex-col items-center justify-center p-8 rounded-xl border border-border/50 bg-card/30 transition-all duration-300 text-left md:text-center h-full",
-                  isDisabled
+                  isDisabled && !hasUrl
                     ? "opacity-60 cursor-not-allowed"
                     : "hover:bg-card/80 hover:border-primary/50 hover:shadow-[0_0_30px_-10px_rgba(34,211,238,0.3)] cursor-pointer"
                 )}
@@ -107,7 +110,7 @@ export const WizardStepCard: React.FC<WizardStepCardProps> = ({
                   </span>
                 )}
                 <div className="absolute inset-0 border-2 border-transparent group-hover:border-primary/20 rounded-xl transition-colors pointer-events-none" />
-              </button>
+              </Component>
             );
           })}
         </div>
