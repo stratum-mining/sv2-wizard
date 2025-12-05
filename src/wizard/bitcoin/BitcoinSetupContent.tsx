@@ -6,7 +6,7 @@ import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import type { BitcoinNetwork } from '../types';
-import { NETWORK_SOCKET_PATHS, getDefaultSocketPath } from '../constants';
+import { NETWORK_SOCKET_PATHS, getDefaultSocketPath, isMacOS } from '../constants';
 import { CodeBlock, InfoCard } from '../ui';
 
 // Get the find command to locate node.sock based on OS and network
@@ -116,20 +116,11 @@ export const BitcoinSetupContent = ({
           <div className="space-y-3">
             <div>
               <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-2">bitcoin.conf location</span>
-              <div className="space-y-2">
-                <div>
-                  <span className="text-xs text-muted-foreground block mb-1">Linux / Unix</span>
-                  <code className="block bg-black/30 px-3 py-2 rounded text-sm font-mono text-primary/90">
-                    ~/.bitcoin/bitcoin.conf
-                  </code>
-                </div>
-                <div>
-                  <span className="text-xs text-muted-foreground block mb-1">macOS</span>
-                  <code className="block bg-black/30 px-3 py-2 rounded text-sm font-mono text-primary/90">
-                    ~/Library/Application Support/Bitcoin/bitcoin.conf
-                  </code>
-                </div>
-              </div>
+              <code className="block bg-black/30 px-3 py-2 rounded text-sm font-mono text-primary/90">
+                {isMacOS() 
+                  ? "~/Library/Application Support/Bitcoin/bitcoin.conf"
+                  : "~/.bitcoin/bitcoin.conf"}
+              </code>
             </div>
             <div>
               <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-2">Required Configuration</span>
