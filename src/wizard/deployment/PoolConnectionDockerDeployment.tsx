@@ -114,6 +114,9 @@ cd docker`}
                 ? "Bring up the JD Client and the translator proxy."
                 : "Bring up the translator proxy (connects to pool's templates)."}
             </p>
+            <p className="text-xs text-muted-foreground mb-2">
+              <strong>Important:</strong> Run this command from inside the <code className="text-primary">docker/</code> directory.
+            </p>
             <CodeBlock
               label="Launch command"
               code={commandSequence}
