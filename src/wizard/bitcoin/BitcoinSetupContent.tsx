@@ -1,13 +1,19 @@
 // Bitcoin Core setup content component
 
 import { useState } from "react";
-import { ArrowRight, Settings, Play, Download, HardDrive } from "lucide-react";
+import { ArrowRight, Settings, Play, Download, HardDrive, Search } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import type { BitcoinNetwork } from '../types';
 import { NETWORK_SOCKET_PATHS, getDefaultSocketPath } from '../constants';
 import { CodeBlock, InfoCard } from '../ui';
+
+// Get the find command to locate node.sock based on OS and network
+const getFindSocketCommand = (_network: BitcoinNetwork): string => {
+  // Search from home directory to handle custom datadir locations
+  return `find ~ -name "node.sock" -type s 2>/dev/null`;
+};
 
 export const BitcoinSetupContent = ({
   network, 
@@ -188,6 +194,20 @@ rpcallowip=0.0.0.0/0`}
           <p className="text-sm text-muted-foreground mb-4">
             Now that your node is running, find the socket file for <strong>{networkSocket.label}</strong>:
           </p>
+
+          <div className="mb-6 space-y-3">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Search className="w-4 h-4 text-primary" />
+              <span>Run this command in your terminal to find the socket path:</span>
+            </div>
+            <CodeBlock 
+              label="Find socket command" 
+              code={getFindSocketCommand(network)} 
+            />
+            <p className="text-xs text-muted-foreground">
+              Copy the output path and paste it below. If no result appears, ensure your node is running with <code className="text-primary">-ipcbind=unix</code>.
+            </p>
+          </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
