@@ -94,7 +94,7 @@ export const PoolConnectionBinariesDeployment = ({ data }: { data?: any }) => {
 
   // Download and setup command (all in one directory)
   const downloadAndSetupCommand = `mkdir -p sv2 && cd sv2
-wget ${minerAppsUrl}
+curl -L -O ${minerAppsUrl}
 tar -xzf ${minerAppsTarball} --strip-components=1 && rm ${minerAppsTarball}
 unzip -o ../config.zip`;
 

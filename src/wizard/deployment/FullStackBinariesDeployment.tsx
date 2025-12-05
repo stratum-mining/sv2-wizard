@@ -110,8 +110,8 @@ export const FullStackBinariesDeployment = ({ data }: { data?: any }) => {
 
   // Download and setup command (all in one directory)
   const downloadAndSetupCommand = `mkdir -p sv2 && cd sv2
-wget ${poolAppsUrl}
-wget ${minerAppsUrl}
+curl -L -O ${poolAppsUrl}
+curl -L -O ${minerAppsUrl}
 tar -xzf ${poolAppsTarball} --strip-components=1 && rm ${poolAppsTarball}
 tar -xzf ${minerAppsTarball} --strip-components=1 && rm ${minerAppsTarball}
 unzip -o ../config.zip`;
