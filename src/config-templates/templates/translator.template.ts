@@ -37,16 +37,19 @@ aggregate_channels = {{AGGREGATE_CHANNELS}}
 
 {{REQUIRED_EXTENSIONS_BLOCK}}
 
+# Monitoring HTTP server address for exposing channel data (optional)
+monitoring_address = "0.0.0.0:9092"
 
 # Difficulty params
 [downstream_difficulty_config]
 # hashes/s of the weakest miner that will be connecting (e.g.: 10 Th/s = 10_000_000_000_000.0)
-min_individual_miner_hashrate = {{MIN_INDIVIDUAL_MINER_HASHRATE}}
+min_individual_miner_hashrate= {{MIN_INDIVIDUAL_MINER_HASHRATE}}
 # target number of shares per minute the miner should be sending
 shares_per_minute = {{SHARES_PER_MINUTE}}
-# disable variable difficulty adjustment when using with JDC (JDC handles vardiff)
+# enable variable difficulty adjustment (true by default, set to false when using with JDC)
 enable_vardiff = {{ENABLE_VARDIFF}}
-
+# Interval in seconds for sending keepalive jobs to prevent miner timeout during low upstream activity (set to 0 to disable)
+job_keepalive_interval_secs = 60
 
 [[upstreams]]
 address = "{{UPSTREAM_ADDRESS}}"

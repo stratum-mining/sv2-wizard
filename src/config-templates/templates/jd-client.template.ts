@@ -70,18 +70,31 @@ required_extensions = [
 ]
 
 
-# List of upstreams (JDS) used as backup endpoints
-# In case of shares refused by the JDS, the fallback system will propose the same job to the next upstream in this list
+# Monitoring HTTP server address for exposing channel data (optional)
+monitoring_address = "0.0.0.0:9091"
+
+# List of upstreams (Pool and JDS) used as backup endpoints
+# In case of shares refused by the Pool or JDS, the fallback system will propose the same job to the next upstream in this list
 [[upstreams]]
 authority_pubkey = "{{AUTHORITY_PUBLIC_KEY}}"
 pool_address = "{{JDC_POOL_ADDRESS}}"
-pool_port = "{{JDC_POOL_PORT}}"
+pool_port = {{JDC_POOL_PORT}}
 jds_address = "{{JDC_UPSTREAM_JDS_ADDRESS}}"
-jds_port = "{{JDC_UPSTREAM_JDS_PORT}}"
+jds_port = {{JDC_UPSTREAM_JDS_PORT}}
+ 
+# [[upstreams]]
+# authority_pubkey = "2di19GHYQnAZJmEpoUeP7C3Eg9TCcksHr23rZCC83dvUiZgiDL"
+# pool_address = "127.0.0.1:34254"
+# pool_port = "34254"
+# jds_address = "127.0.0.1:34264"
+# jds_port = "34264"
 
 # Bitcoin Core IPC config
+# Supported networks: mainnet, testnet4, signet, regtest
+# Default data_dir: ~/.bitcoin (Linux) or ~/Library/Application Support/Bitcoin (macOS)
 [template_provider_type.BitcoinCoreIpc]
-unix_socket_path = "{{UNIX_SOCKET_PATH}}"
+network = "{{NETWORK}}"
+{{DATA_DIR_LINE}}
 fee_threshold = {{FEE_THRESHOLD}}
 min_interval = {{MIN_INTERVAL}}`;
 

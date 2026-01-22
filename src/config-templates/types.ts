@@ -28,6 +28,7 @@ export interface ConfigTemplateData {
   // Network and connection
   network?: 'mainnet' | 'testnet4';
   socketPath?: string;
+  dataDir?: string; // Custom Bitcoin data directory path
   
   // Pool configuration
   poolSignature?: string;

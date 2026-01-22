@@ -14,7 +14,7 @@ import {
 import type { ConfigTemplateData } from '../../config-templates';
 import { downloadFile } from '../utils';
 
-import { getPlatform, getDownloadUrl } from '../constants';
+import { getPlatform, getDownloadUrl, SV2_APPS_RELEASE } from '../constants';
 
 export const FullStackBinariesDeployment = ({ data }: { data?: any }) => {
   const socketPath = data?.bitcoinSocketPath || "/path/to/node.sock";
@@ -27,6 +27,7 @@ export const FullStackBinariesDeployment = ({ data }: { data?: any }) => {
   const configData: ConfigTemplateData = {
     network,
     socketPath,
+    dataDir: data?.bitcoinDataDir,
     poolSignature: data?.poolSignature,
     poolPayoutAddress: data?.poolPayoutAddress,
     listenAddress: data?.listenAddress,
@@ -141,9 +142,41 @@ unzip -o ../config.zip`;
         </Button>
       </InfoCard>
       
+      <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-4">
+        <p className="text-sm text-amber-200 mb-2">
+          <strong>⚠️ Platform Detection Notice:</strong> We detected your platform as <code className="text-xs bg-black/20 px-1.5 py-0.5 rounded">{platform}</code>, but this may not be accurate (especially on Apple Silicon Macs).
+        </p>
+        <p className="text-xs text-amber-200/80 mb-3">
+          <strong>Please verify:</strong> Check your system architecture and download the correct binaries from the release page if needed.
+        </p>
+        <div className="space-y-3">
+          <Button 
+            variant="secondary" 
+            size="sm" 
+            className="w-full sm:w-auto"
+            asChild
+          >
+            <a href={SV2_APPS_RELEASE.releasePage} target="_blank" rel="noopener noreferrer">
+              View Release Page & Download Binaries
+            </a>
+          </Button>
+          <CodeBlock 
+            label="Check your architecture" 
+            code={`# On Linux/macOS
+uname -m
+
+# On macOS, also check:
+sysctl -n machdep.cpu.brand_string`}
+          />
+        </div>
+      </div>
+
       <InfoCard number={2} title="Download & Setup" icon={Download}>
         <p className="text-sm text-muted-foreground mb-2">
           Download binaries for <code className="text-xs">{platform}</code> and extract:
+        </p>
+        <p className="text-xs text-muted-foreground mb-2">
+          <strong>Note:</strong> If the detected platform is incorrect, download the correct binaries from the <a href={SV2_APPS_RELEASE.releasePage} target="_blank" rel="noopener noreferrer" className="text-primary underline">release page</a> and adjust the commands below.
         </p>
         <CodeBlock label="Setup" code={downloadAndSetupCommand} />
       </InfoCard>

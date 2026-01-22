@@ -1,19 +1,13 @@
 // Bitcoin Core setup content component
 
 import { useState } from "react";
-import { ArrowRight, Settings, Play, Download, HardDrive, Search } from "lucide-react";
+import { ArrowRight, Settings, Play, Download, HardDrive } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import type { BitcoinNetwork } from '../types';
-import { NETWORK_SOCKET_PATHS, getDefaultSocketPath, isMacOS } from '../constants';
+import { isMacOS } from '../constants';
 import { CodeBlock, InfoCard } from '../ui';
-
-// Get the find command to locate node.sock based on OS and network
-const getFindSocketCommand = (_network: BitcoinNetwork): string => {
-  // Search from home directory to handle custom datadir locations
-  return `find ~ -name "node.sock" -type s 2>/dev/null`;
-};
 
 export const BitcoinSetupContent = ({
   network, 
@@ -30,22 +24,18 @@ export const BitcoinSetupContent = ({
   description?: string, 
   showBitcoinConf?: boolean 
 }) => {
-  const networkSocket = NETWORK_SOCKET_PATHS[network];
-  // Empty by default, use saved value if exists
-  const [socketPath, setSocketPath] = useState(data?.bitcoinSocketPath || "");
-  // Default path for placeholder (auto-detects OS)
-  const defaultSocketPath = getDefaultSocketPath(network);
+  const [dataDir, setDataDir] = useState(data?.bitcoinDataDir || "");
   // Reset nodeStarted to false when component mounts to ensure confirmation button always shows
   const [nodeStarted, setNodeStarted] = useState(false);
   const startNodeCommand = network === "mainnet" 
-    ? "./bitcoin-30.0/bin/bitcoin -m node -ipcbind=unix"
-    : "./bitcoin-30.0/bin/bitcoin -m node -ipcbind=unix -testnet4";
+    ? "./bitcoin-30.2/bin/bitcoin -m node -ipcbind=unix"
+    : "./bitcoin-30.2/bin/bitcoin -m node -ipcbind=unix -testnet4";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (updateData) {
       updateData({ 
-        bitcoinSocketPath: socketPath
+        bitcoinDataDir: dataDir || undefined // Only include if provided
       });
     }
     if (onContinue) {
@@ -66,7 +56,7 @@ export const BitcoinSetupContent = ({
 
       <div className="grid gap-4 md:grid-cols-3">
         <InfoCard number={1} title="Install Bitcoin Core" icon={Download}>
-          <p className="text-sm text-muted-foreground mb-3">Download and install version 30.0 or later.</p>
+          <p className="text-sm text-muted-foreground mb-3">Download and install version 30.2 or later.</p>
           <Button variant="secondary" size="sm" className="w-full text-xs" asChild>
             <a href="https://bitcoincore.org/en/download/" target="_blank" rel="noopener noreferrer">
               Visit BitcoinCore.org
@@ -180,41 +170,26 @@ rpcallowip=0.0.0.0/0`}
       ) : (
         <div className="border border-primary/20 rounded-lg p-6 bg-primary/5">
           <h3 className="text-primary font-semibold flex items-center gap-2 mb-4">
-            <HardDrive className="w-4 h-4" /> Locate node.sock
+            <HardDrive className="w-4 h-4" /> Bitcoin Core Configuration
           </h3>
           <p className="text-sm text-muted-foreground mb-4">
-            Now that your node is running, find the socket file for <strong>{networkSocket.label}</strong>:
+            Configure your Bitcoin Core node settings:
           </p>
-
-          <div className="mb-6 space-y-3">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Search className="w-4 h-4 text-primary" />
-              <span>Run this command in your terminal to find the socket path:</span>
-            </div>
-            <CodeBlock 
-              label="Find socket command" 
-              code={getFindSocketCommand(network)} 
-            />
-            <p className="text-xs text-muted-foreground">
-              Copy the output path and paste it below. If no result appears, ensure your node is running with <code className="text-primary">-ipcbind=unix</code>.
-            </p>
-          </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="socketPath" className="text-white font-medium">
-                Bitcoin Socket Absolute Path <span className="text-primary">*</span>
+              <Label htmlFor="dataDir" className="text-white font-medium">
+                Custom Bitcoin Data Directory <span className="text-muted-foreground">(Optional)</span>
               </Label>
               <Input 
-                id="socketPath" 
-                placeholder={defaultSocketPath}
-                value={socketPath} 
-                onChange={(e) => setSocketPath(e.target.value)}
-                required
+                id="dataDir" 
+                placeholder="/custom/bitcoin/data"
+                value={dataDir} 
+                onChange={(e) => setDataDir(e.target.value)}
                 className="bg-white/5 border-2 border-white/30 font-mono text-sm text-white placeholder:text-muted-foreground/70 focus:border-primary focus:ring-2 focus:ring-primary/50 hover:border-white/50 hover:bg-white/10 transition-all cursor-text"
               />
               <p className="text-xs text-muted-foreground">
-                Enter the absolute path to your <code className="text-primary">node.sock</code> file.
+                Only specify if your Bitcoin Core data directory is in a non-default location. Leave empty if using the default path.
               </p>
             </div>
             <div className="flex justify-end">

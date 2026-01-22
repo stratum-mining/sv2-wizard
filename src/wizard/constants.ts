@@ -19,9 +19,9 @@ export const NETWORK_SOCKET_PATHS: Record<BitcoinNetwork, NetworkSocketPath> = {
 // Update these values when a new release is available
 // Release page: https://github.com/stratum-mining/sv2-apps/releases
 export const SV2_APPS_RELEASE = {
-  version: "v0.1.0",
-  baseUrl: "https://github.com/stratum-mining/sv2-apps/releases/download/v0.1.0",
-  releasePage: "https://github.com/stratum-mining/sv2-apps/releases/tag/v0.1.0",
+  version: "v0.2.0",
+  baseUrl: "https://github.com/stratum-mining/sv2-apps/releases/download/v0.2.0",
+  releasePage: "https://github.com/stratum-mining/sv2-apps/releases/tag/v0.2.0",
   
   // Available platforms (architecture-os combinations)
   platforms: {

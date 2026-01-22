@@ -28,13 +28,19 @@ export function buildJdClientConfig(data: ConfigTemplateData): string {
   const jdcJdsAddress = selectedPoolConfig?.jdsAddress || DEFAULT_CONFIG_VALUES.localhost;
   const jdcJdsPort = selectedPoolConfig?.jdsPort || DEFAULT_CONFIG_VALUES.jdsPort;
   
+  // Include data_dir only if provided
+  const dataDirLine = data.dataDir 
+    ? `data_dir = "${data.dataDir}"`
+    : `# data_dir = "/custom/bitcoin/data"  # Optional: override default data directory`;
+  
   return processConfigTemplate(JD_CLIENT_CONFIG_TEMPLATE, {
     AUTHORITY_PUBLIC_KEY: data.authorityPublicKey || DEFAULT_AUTHORITY_PUBLIC_KEY,
     AUTHORITY_SECRET_KEY: data.authoritySecretKey || DEFAULT_AUTHORITY_SECRET_KEY,
     USER_IDENTITY: data.userIdentity || DEFAULT_CONFIG_VALUES.defaultUserIdentity,
     JDC_SIGNATURE: data.jdcSignature || DEFAULT_CONFIG_VALUES.defaultJdcSignature,
     COINBASE_REWARD_SCRIPT: data.coinbaseRewardAddress || getAddressPlaceholder(network),
-    UNIX_SOCKET_PATH: data.socketPath || "/path/to/node.sock",
+    NETWORK: network,
+    DATA_DIR_LINE: dataDirLine,
     FEE_THRESHOLD: data.feeThreshold || DEFAULT_CONFIG_VALUES.feeThreshold,
     MIN_INTERVAL: data.minInterval || DEFAULT_CONFIG_VALUES.minInterval,
     SHARES_PER_MINUTE: data.sharesPerMinute || DEFAULT_CONFIG_VALUES.sharesPerMinute,
@@ -142,13 +148,19 @@ required_extensions = [
 export function buildPoolServerConfig(data: ConfigTemplateData): string {
   const network = data.network || 'mainnet';
   
+  // Include data_dir only if provided
+  const dataDirLine = data.dataDir 
+    ? `data_dir = "${data.dataDir}"`
+    : `# data_dir = "/custom/bitcoin/data"  # Optional: override default data directory`;
+  
   return processConfigTemplate(POOL_SERVER_CONFIG_TEMPLATE, {
     AUTHORITY_PUBLIC_KEY: data.authorityPublicKey || DEFAULT_AUTHORITY_PUBLIC_KEY,
     AUTHORITY_SECRET_KEY: data.authoritySecretKey || DEFAULT_AUTHORITY_SECRET_KEY,
     LISTEN_ADDRESS: data.listenAddress || `${DEFAULT_CONFIG_VALUES.anyAddress}:${DEFAULT_CONFIG_VALUES.poolPort}`,
     COINBASE_REWARD_SCRIPT: `addr(${data.poolPayoutAddress || getAddressPlaceholder(network)})`,
     POOL_SIGNATURE: data.poolSignature || DEFAULT_CONFIG_VALUES.defaultPoolSignature,
-    UNIX_SOCKET_PATH: data.socketPath || "/path/to/node.sock",
+    NETWORK: network,
+    DATA_DIR_LINE: dataDirLine,
     FEE_THRESHOLD: data.feeThreshold || DEFAULT_CONFIG_VALUES.feeThreshold,
     MIN_INTERVAL: data.minInterval || DEFAULT_CONFIG_VALUES.minInterval,
     SHARES_PER_MINUTE: data.sharesPerMinute || DEFAULT_CONFIG_VALUES.sharesPerMinute,

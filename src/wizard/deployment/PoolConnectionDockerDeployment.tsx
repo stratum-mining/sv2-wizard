@@ -2,21 +2,32 @@
 // Deploys: JDC (optional) + Translator Proxy to connect to existing pools
 
 import { useState } from "react";
-import { Download, Terminal, Play, FileDown, Network, CheckCircle2, ChevronDown, ChevronUp, Cpu } from "lucide-react";
+import { Download, Terminal, Play, FileDown, Network, CheckCircle2, ChevronDown, ChevronUp, Cpu, Search, HardDrive } from "lucide-react";
 import { Button } from "../../components/ui/button";
+import { Input } from "../../components/ui/input";
+import { Label } from "../../components/ui/label";
 import { CodeBlock, InfoCard } from '../ui';
 import { generatePoolConnectionEnvFile, downloadFile } from '../utils';
+import { getDefaultSocketPath } from '../constants';
 
 export const PoolConnectionDockerDeployment = ({ data }: { data?: any }) => {
-  const needsSocketPath = !!data?.bitcoinSocketPath;
-  const socketPath = data?.bitcoinSocketPath || "/path/to/node.sock";
+  // Socket path is needed if user is constructing templates (using JDC)
+  const needsSocketPath = data?.constructTemplates === true;
+  const network = (data?.selectedNetwork || "mainnet") as 'mainnet' | 'testnet4';
+  const defaultSocketPath = getDefaultSocketPath(network);
+  const [socketPath, setSocketPath] = useState(data?.bitcoinSocketPath || "");
   const [jdcConfigConfirmed, setJdcConfigConfirmed] = useState(false);
   const [translatorConfigConfirmed, setTranslatorConfigConfirmed] = useState(false);
   const [completedClicked, setCompletedClicked] = useState(false);
   const [showCpuMiner, setShowCpuMiner] = useState(false);
   
+  // Get the find command to locate node.sock
+  const getFindSocketCommand = (): string => {
+    return `find ~ -name "node.sock" -type s 2>/dev/null`;
+  };
+  
   const allConfigsConfirmed = needsSocketPath 
-    ? jdcConfigConfirmed && translatorConfigConfirmed 
+    ? jdcConfigConfirmed && translatorConfigConfirmed && !!socketPath
     : translatorConfigConfirmed;
   
   // When using pool templates, only start translator. When using custom templates, start both JDC and translator.
@@ -36,10 +47,10 @@ export const PoolConnectionDockerDeployment = ({ data }: { data?: any }) => {
             git clone https://github.com/stratum-mining/sv2-apps.git
           </code>
         </InfoCard>
-        <InfoCard number={2} title="Checkout v0.1.0" icon={Terminal}>
-          <p className="text-sm text-muted-foreground mb-2">Switch to the v0.1.0 release tag.</p>
+        <InfoCard number={2} title="Checkout v0.2.0" icon={Terminal}>
+          <p className="text-sm text-muted-foreground mb-2">Switch to the v0.2.0 release branch.</p>
           <code className="bg-muted/50 px-2 py-1 rounded text-xs font-mono text-primary block overflow-x-auto">
-            git checkout v0.1.0
+            git checkout release/v0.2.0
           </code>
         </InfoCard>
         <InfoCard number={3} title="Enter docker workspace" icon={Terminal}>
@@ -54,9 +65,51 @@ export const PoolConnectionDockerDeployment = ({ data }: { data?: any }) => {
         label="Setup commands"
         code={`git clone https://github.com/stratum-mining/sv2-apps.git
 cd sv2-apps
-git checkout v0.1.0
+git checkout release/v0.2.0
 cd docker`}
       />
+
+      {needsSocketPath && (
+        <div className="border border-primary/20 rounded-lg p-6 bg-primary/5">
+          <h3 className="text-primary font-semibold flex items-center gap-2 mb-4">
+            <HardDrive className="w-4 h-4" /> Bitcoin Socket Path (Required for Docker)
+          </h3>
+          <p className="text-sm text-muted-foreground mb-4">
+            Docker needs the absolute path to your <code className="text-primary">node.sock</code> file to mount it into the container.
+          </p>
+          
+          <div className="mb-4 space-y-3">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Search className="w-4 h-4 text-primary" />
+              <span>Run this command in your terminal to find the socket path:</span>
+            </div>
+            <CodeBlock 
+              label="Find socket command" 
+              code={getFindSocketCommand()} 
+            />
+            <p className="text-xs text-muted-foreground">
+              Copy the output path and paste it below. If no result appears, ensure your node is running with <code className="text-primary">-ipcbind=unix</code>.
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="socketPath" className="text-white font-medium">
+              Bitcoin Socket Absolute Path <span className="text-primary">*</span>
+            </Label>
+            <Input 
+              id="socketPath" 
+              placeholder={defaultSocketPath}
+              value={socketPath} 
+              onChange={(e) => setSocketPath(e.target.value)}
+              required
+              className="bg-white/5 border-2 border-white/30 font-mono text-sm text-white placeholder:text-muted-foreground/70 focus:border-primary focus:ring-2 focus:ring-primary/50 hover:border-white/50 hover:bg-white/10 transition-all cursor-text"
+            />
+            <p className="text-xs text-muted-foreground">
+              Enter the absolute path to your <code className="text-primary">node.sock</code> file.
+            </p>
+          </div>
+        </div>
+      )}
 
       <div className="grid gap-4 md:grid-cols-1">
         <InfoCard number={4} title="Download docker_env file" icon={FileDown}>
@@ -68,9 +121,14 @@ cd docker`}
             size="sm" 
             className="w-full"
             onClick={() => {
+              if (needsSocketPath && !socketPath) {
+                alert("Please enter the Bitcoin socket path first.");
+                return;
+              }
               const envContent = generatePoolConnectionEnvFile(data, needsSocketPath ? socketPath : undefined);
               downloadFile(envContent, 'docker_env');
             }}
+            disabled={needsSocketPath && !socketPath}
           >
             <FileDown className="w-4 h-4 mr-2" />
             Download docker_env file

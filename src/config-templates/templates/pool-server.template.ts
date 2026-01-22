@@ -1,11 +1,9 @@
 // Pool Server configuration template
 
 export const POOL_SERVER_CONFIG_TEMPLATE = `# SRI Pool config
-
 authority_public_key = "{{AUTHORITY_PUBLIC_KEY}}"
 authority_secret_key = "{{AUTHORITY_SECRET_KEY}}"
 cert_validity_sec = 3600
-test_only_listen_adress_plain =  "0.0.0.0:34250"
 listen_address = "{{LISTEN_ADDRESS}}"
 
 # Coinbase outputs are specified as descriptors. A full list of descriptors is available at
@@ -27,7 +25,6 @@ pool_signature = "{{POOL_SIGNATURE}}"
 
 # How many shares we expect to receive in a minute (determines difficulty targets)
 shares_per_minute = {{SHARES_PER_MINUTE}}
-
 # How many shares do we want to acknowledge in a batch
 share_batch_size = {{SHARE_BATCH_SIZE}}
 
@@ -45,9 +42,15 @@ required_extensions = [
     # 0x0002,
 ]
 
+# Monitoring HTTP server address for exposing channel data (optional)
+monitoring_address = "127.0.0.1:9090"
+
 # Bitcoin Core IPC config
+# Supported networks: mainnet, testnet4, signet, regtest
+# Default data_dir: ~/.bitcoin (Linux) or ~/Library/Application Support/Bitcoin (macOS)
 [template_provider_type.BitcoinCoreIpc]
-unix_socket_path = "{{UNIX_SOCKET_PATH}}"
+network = "{{NETWORK}}"
+{{DATA_DIR_LINE}}
 fee_threshold = {{FEE_THRESHOLD}}
 min_interval = {{MIN_INTERVAL}}`;
 
