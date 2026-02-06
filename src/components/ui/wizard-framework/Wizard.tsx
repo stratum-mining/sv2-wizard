@@ -87,41 +87,41 @@ export function Wizard({ config, onComplete, className }: WizardProps) {
   const progress = Math.min(history.length * 15, 100);
 
   return (
-    <div className={cn("w-full max-w-3xl relative mx-auto pt-8", className)}>
+    <div className={cn("w-full max-w-3xl relative mx-auto pt-12", className)}>
       {/* Title */}
       {config.title && (
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">{config.title}</h1>
+        <div className="text-center mb-12">
+          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground mb-2">{config.title}</h1>
           {config.subtitle && (
             <p className="text-lg text-muted-foreground">{config.subtitle}</p>
           )}
         </div>
       )}
 
-      <Card className="glass-panel border-border/50 shadow-2xl shadow-black/50 min-h-[400px] flex flex-col relative">
+      <Card className="border-border min-h-[400px] flex flex-col relative">
         {/* Progress Bar */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-muted/30 rounded-t-lg overflow-hidden">
-          <motion.div 
-            className="h-full bg-primary shadow-[0_0_10px_var(--primary)]"
+        <div className="absolute top-0 left-0 w-full h-1 bg-muted rounded-t-2xl overflow-hidden">
+          <motion.div
+            className="h-full bg-primary"
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.5 }}
           />
         </div>
         {/* Header */}
-        <div className="p-6 border-b border-white/5 flex items-center justify-between">
+        <div className="p-6 border-b border-border flex items-center justify-between">
           <div className="flex items-center gap-3">
             {history.length > 0 && (
               <Button 
                 variant="ghost" 
                 size="icon" 
                 onClick={handleBack}
-                className="h-8 w-8 -ml-2 hover:bg-white/5"
+                className="h-8 w-8 -ml-2"
               >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
             )}
-            <span className="text-xs font-mono text-primary/80 uppercase tracking-widest">
+            <span className="text-xs font-mono text-primary uppercase tracking-widest">
               Step {history.length + 1}
             </span>
           </div>
@@ -132,8 +132,8 @@ export function Wizard({ config, onComplete, className }: WizardProps) {
               <div 
                 key={i} 
                 className={cn(
-                  "w-2 h-2 rounded-full transition-colors duration-300", 
-                  history.length > i ? "bg-primary" : (history.length === i ? "bg-primary/50 animate-pulse" : "bg-muted")
+                  "w-2.5 h-2.5 rounded-full transition-colors duration-300",
+                  history.length > i ? "bg-primary" : (history.length === i ? "bg-primary animate-pulse" : "bg-border")
                 )} 
               />
             ))}
@@ -141,7 +141,7 @@ export function Wizard({ config, onComplete, className }: WizardProps) {
         </div>
 
         {/* Content Area */}
-        <CardContent className="p-6 md:p-10 flex-1 flex flex-col justify-center">
+        <CardContent className="p-8 md:p-12 flex-1 flex flex-col justify-center">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentStepId}
@@ -165,7 +165,7 @@ export function Wizard({ config, onComplete, className }: WizardProps) {
                   <Button 
                     variant="outline" 
                     onClick={handleReset} 
-                    className="border-primary/20 hover:bg-primary/10 text-primary hover:text-primary"
+                    className="border-primary/30 hover:bg-primary/10 text-primary"
                     disabled={showCompletionMessage}
                   >
                     Completed!
@@ -176,7 +176,7 @@ export function Wizard({ config, onComplete, className }: WizardProps) {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="rounded-lg border border-green-500/30 bg-green-500/10 px-6 py-3 text-sm text-green-100"
+                        className="rounded-2xl border border-border bg-card px-6 py-3 text-sm text-foreground"
                       >
                         <div className="flex items-center gap-2">
                           <Check className="h-4 w-4" />

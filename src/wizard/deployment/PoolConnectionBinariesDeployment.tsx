@@ -105,7 +105,7 @@ unzip -o ../config.zip`;
   const translatorCommand = `./translator/translator_sv2 -c config/translator-config.toml`;
   
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <InfoCard number={1} title="Download configs" icon={FileDown}>
         <p className="text-sm text-muted-foreground mb-2">
           Download your generated config files:
@@ -121,11 +121,11 @@ unzip -o ../config.zip`;
         </Button>
       </InfoCard>
       
-      <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-4">
-        <p className="text-sm text-amber-200 mb-2">
-          <strong>⚠️ Platform Detection Notice:</strong> We detected your platform as <code className="text-xs bg-black/20 px-1.5 py-0.5 rounded">{platform}</code>, but this may not be accurate (especially on Apple Silicon Macs).
+      <div className="rounded-2xl border border-border bg-card p-4">
+        <p className="text-sm text-foreground mb-2">
+          <strong>⚠️ Platform Detection Notice:</strong> We detected your platform as <code className="text-xs bg-muted px-1.5 py-0.5 rounded">{platform}</code>, but this may not be accurate (especially on Apple Silicon Macs).
         </p>
-        <p className="text-xs text-amber-200/80 mb-3">
+        <p className="text-xs text-muted-foreground mb-3">
           <strong>Please verify:</strong> Check your system architecture and download the correct binaries from the release page if needed.
         </p>
         <div className="space-y-3">
@@ -152,7 +152,7 @@ sysctl -n machdep.cpu.brand_string`}
 
       <InfoCard number={2} title="Download & Setup" icon={Download}>
         <p className="text-sm text-muted-foreground mb-2">
-          Download binaries for <code className="text-xs">{platform}</code> and extract:
+          Download binaries for <code className="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">{platform}</code> and extract:
         </p>
         <p className="text-xs text-muted-foreground mb-2">
           <strong>Note:</strong> If the detected platform is incorrect, download the correct binaries from the <a href={SV2_APPS_RELEASE.releasePage} target="_blank" rel="noopener noreferrer" className="text-primary underline">release page</a> and adjust the commands below.
@@ -162,9 +162,9 @@ sysctl -n machdep.cpu.brand_string`}
       
       {needsSocketPath ? (
         <>
-          <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-3">
-            <p className="text-sm font-medium text-amber-200 text-center">
-              Run each application in a separate terminal from the <code className="text-xs bg-black/20 px-1.5 py-0.5 rounded">sv2/</code> directory:
+          <div className="rounded-2xl border border-border bg-card p-3">
+            <p className="text-sm font-medium text-foreground text-center">
+              Run each application in a separate terminal from the <code className="text-xs bg-muted px-1.5 py-0.5 rounded">sv2/</code> directory:
             </p>
           </div>
           
@@ -187,7 +187,7 @@ sysctl -n machdep.cpu.brand_string`}
       ) : (
         <InfoCard number={3} title="Run Translator" icon={Play}>
           <p className="text-sm text-muted-foreground mb-2">
-            From the <code className="text-xs">sv2/</code> directory:
+            From the <code className="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">sv2/</code> directory:
           </p>
           <CodeBlock label="Run" code={translatorCommand} />
           <p className="mt-2 text-xs text-muted-foreground">
@@ -196,22 +196,22 @@ sysctl -n machdep.cpu.brand_string`}
         </InfoCard>
       )}
 
-      <div className="rounded-lg border border-green-500/30 bg-green-500/10 p-4">
+      <div className="rounded-2xl border border-border bg-card p-4">
         <div className="flex items-start gap-3">
-          <Network className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+          <Network className="w-5 h-5 text-success mt-0.5 flex-shrink-0" />
           <div className="flex-1">
-            <h3 className="text-sm font-semibold text-green-100 mb-2">
+            <h3 className="text-sm font-semibold text-foreground mb-2">
               Connect Miners
             </h3>
-            <p className="text-sm text-green-200/90 mb-2">
-              Translator Proxy will be running on port <code className="text-xs font-mono bg-black/20 px-1.5 py-0.5 rounded">34255</code>. Edit your mining device(s) configuration, adding the line:
+            <p className="text-sm text-muted-foreground mb-2">
+              Translator Proxy will be running on port <code className="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">34255</code>. Edit your mining device(s) configuration, adding the line:
             </p>
-            <code className="text-sm font-mono text-green-100 block bg-black/20 rounded p-2 mb-4">
+            <code className="text-sm font-mono text-foreground block bg-muted rounded p-2 mb-4">
               stratum+tcp://&lt;host-ip&gt;:34255
             </code>
             <button
               onClick={() => setShowCpuMiner(!showCpuMiner)}
-              className="w-full flex items-center justify-center gap-2 text-sm font-medium text-green-100 bg-green-500/20 hover:bg-green-500/30 border border-green-400/30 rounded-lg px-4 py-3 transition-all"
+              className="w-full flex items-center justify-center gap-2 text-sm font-medium text-foreground bg-muted hover:bg-accent border border-border rounded-xl px-4 py-3 transition-all"
             >
               <Cpu className="w-4 h-4" />
               {showCpuMiner ? (
@@ -231,26 +231,26 @@ sysctl -n machdep.cpu.brand_string`}
       </div>
 
       {showCpuMiner && (
-        <div className="rounded-lg border border-blue-500/30 bg-blue-500/10 p-4">
+        <div className="rounded-2xl border border-border bg-card p-4">
           <div className="flex items-start gap-3">
-            <Cpu className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
+            <Cpu className="w-5 h-5 text-info mt-0.5 flex-shrink-0" />
             <div className="flex-1 space-y-3">
-              <h3 className="text-sm font-semibold text-blue-100">
+              <h3 className="text-sm font-semibold text-foreground">
                 CPU Miner
               </h3>
-              <p className="text-sm text-blue-200/90">
+              <p className="text-sm text-muted-foreground">
                 If you don't have a physical miner, you can do tests with CPUMiner.
               </p>
               <div className="space-y-3">
                 <div>
-                  <p className="text-xs text-blue-200/80 mb-1 font-semibold">Setup the correct CPUMiner for your OS:</p>
-                  <ul className="text-xs text-blue-200/80 space-y-1 ml-4 list-disc">
-                    <li>You can download the binary directly from <a href="https://sourceforge.net/projects/cpuminer/files/" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-200 underline">here</a>;</li>
-                    <li>Or compile it from <a href="https://github.com/pooler/cpuminer" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-200 underline">https://github.com/pooler/cpuminer</a></li>
+                  <p className="text-xs text-muted-foreground mb-1 font-semibold">Setup the correct CPUMiner for your OS:</p>
+                  <ul className="text-xs text-muted-foreground space-y-1 ml-4 list-disc">
+                    <li>You can download the binary directly from <a href="https://sourceforge.net/projects/cpuminer/files/" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 underline">here</a>;</li>
+                    <li>Or compile it from <a href="https://github.com/pooler/cpuminer" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 underline">https://github.com/pooler/cpuminer</a></li>
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs text-blue-200/80 mb-1 font-semibold">On the CPUMiner directory:</p>
+                  <p className="text-xs text-muted-foreground mb-1 font-semibold">On the CPUMiner directory:</p>
                   <CodeBlock
                     label="Run cpuminer"
                     code={`./minerd -a sha256d -o stratum+tcp://localhost:34255 -q -D -P`}

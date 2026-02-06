@@ -33,26 +33,26 @@ export const FullStackDockerDeployment = ({ data }: { data?: any }) => {
   const commandSequence = `docker compose --profile ${dockerProfile} --env-file docker_env up --build`;
   
   return (
-    <div className="space-y-6">
-      <div className="rounded-lg border border-blue-500/30 bg-blue-500/10 p-4 text-sm text-blue-100">
+    <div className="space-y-8">
+      <div className="rounded-2xl border border-border bg-card p-6 text-sm text-foreground">
         <strong className="font-semibold">Reminder:</strong> Make sure Docker and Docker Compose are installed and running on your system before proceeding.
       </div>
       <div className="grid gap-4 md:grid-cols-3">
         <InfoCard number={1} title="Clone sv2-apps" icon={Download}>
           <p className="text-sm text-muted-foreground mb-2">Get the official Stratum V2 apps repository.</p>
-          <code className="bg-muted/50 px-2 py-1 rounded text-xs font-mono text-primary block overflow-x-auto">
+          <code className="text-xs font-mono bg-muted px-2 py-1 rounded block overflow-x-auto">
             git clone https://github.com/stratum-mining/sv2-apps.git
           </code>
         </InfoCard>
         <InfoCard number={2} title="Checkout v0.2.0" icon={Terminal}>
           <p className="text-sm text-muted-foreground mb-2">Switch to the v0.2.0 release branch.</p>
-          <code className="bg-muted/50 px-2 py-1 rounded text-xs font-mono text-primary block overflow-x-auto">
+          <code className="text-xs font-mono bg-muted px-2 py-1 rounded block overflow-x-auto">
             git checkout release/v0.2.0
           </code>
         </InfoCard>
         <InfoCard number={3} title="Enter docker workspace" icon={Terminal}>
           <p className="text-sm text-muted-foreground mb-2">Switch to the docker profile folder.</p>
-          <code className="bg-muted/50 px-2 py-1 rounded text-xs font-mono text-primary block overflow-x-auto">
+          <code className="text-xs font-mono bg-muted px-2 py-1 rounded block overflow-x-auto">
             cd sv2-apps/docker
           </code>
         </InfoCard>
@@ -66,12 +66,12 @@ git checkout release/v0.2.0
 cd docker`}
       />
 
-      <div className="border border-primary/20 rounded-lg p-6 bg-primary/5">
+      <div className="border-border bg-card rounded-2xl border p-6">
         <h3 className="text-primary font-semibold flex items-center gap-2 mb-4">
           <HardDrive className="w-4 h-4" /> Bitcoin Socket Path (Required for Docker)
         </h3>
         <p className="text-sm text-muted-foreground mb-4">
-          Docker needs the absolute path to your <code className="text-primary">node.sock</code> file to mount it into the container.
+          Docker needs the absolute path to your <code className="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">node.sock</code> file to mount it into the container.
         </p>
         
         <div className="mb-4 space-y-3">
@@ -84,12 +84,12 @@ cd docker`}
             code={getFindSocketCommand()} 
           />
           <p className="text-xs text-muted-foreground">
-            Copy the output path and paste it below. If no result appears, ensure your node is running with <code className="text-primary">-ipcbind=unix</code>.
+            Copy the output path and paste it below. If no result appears, ensure your node is running with <code className="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">-ipcbind=unix</code>.
           </p>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="socketPath" className="text-white font-medium">
+          <Label htmlFor="socketPath" className="font-medium">
             Bitcoin Socket Absolute Path <span className="text-primary">*</span>
           </Label>
           <Input 
@@ -98,10 +98,10 @@ cd docker`}
             value={socketPath} 
             onChange={(e) => setSocketPath(e.target.value)}
             required
-            className="bg-white/5 border-2 border-white/30 font-mono text-sm text-white placeholder:text-muted-foreground/70 focus:border-primary focus:ring-2 focus:ring-primary/50 hover:border-white/50 hover:bg-white/10 transition-all cursor-text"
+            className="font-mono text-sm"
           />
           <p className="text-xs text-muted-foreground">
-            Enter the absolute path to your <code className="text-primary">node.sock</code> file.
+            Enter the absolute path to your <code className="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">node.sock</code> file.
           </p>
         </div>
       </div>
@@ -109,7 +109,7 @@ cd docker`}
       <div className="grid gap-4 md:grid-cols-1">
         <InfoCard number={4} title="Download docker_env file" icon={FileDown}>
           <p className="text-sm text-muted-foreground mb-3">
-            Download the generated <code className="text-xs">docker_env</code> file and place it in the <code className="text-xs">sv2-apps/docker</code> directory.
+            Download the generated <code className="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">docker_env</code> file and place it in the <code className="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">sv2-apps/docker</code> directory.
           </p>
           <Button 
             variant="secondary" 
@@ -136,7 +136,7 @@ cd docker`}
 
       {/* Confirmation checkbox */}
       <div className="space-y-3">
-        <div className="border border-white/10 rounded-lg p-4 bg-white/5">
+        <div className="border border-border rounded-2xl p-6 bg-card">
           <label className="flex items-center gap-3 cursor-pointer">
             <input
               type="checkbox"
@@ -150,10 +150,10 @@ cd docker`}
                 setJdcConfigConfirmed(checked);
                 setTranslatorConfigConfirmed(checked);
               }}
-              className="w-5 h-5 rounded border-white/20 bg-black/20 text-primary focus:ring-primary focus:ring-offset-0 focus:ring-2"
+              className="w-4 h-4 rounded border-border bg-background text-primary focus:ring-primary focus:ring-offset-0 focus:ring-2"
             />
-              <span className="text-sm text-white">
-                I have downloaded and placed the <code className="text-primary font-semibold">docker_env</code> file in <code className="text-primary font-semibold">sv2-apps/docker/</code>
+              <span className="text-sm text-foreground">
+                I have downloaded and placed the <code className="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">docker_env</code> file in <code className="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">sv2-apps/docker/</code>
               </span>
           </label>
         </div>
@@ -168,7 +168,7 @@ cd docker`}
                 : "Bring up the pool and the translator proxy."}
             </p>
             <p className="text-xs text-muted-foreground mb-2">
-              <strong>Important:</strong> Run this command from inside the <code className="text-primary">docker/</code> directory.
+              <strong>Important:</strong> Run this command from inside the <code className="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">docker/</code> directory.
             </p>
             <CodeBlock
               label="Launch command"
@@ -179,25 +179,25 @@ cd docker`}
       )}
 
       {completedClicked && (
-        <div className="rounded-lg border border-green-500/30 bg-green-500/10 p-4">
+        <div className="rounded-2xl border border-border bg-card p-4">
           <div className="flex items-start gap-3">
-            <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-success mt-0.5 flex-shrink-0" />
             <div className="flex-1">
-              <h3 className="text-sm font-semibold text-green-100 mb-2 flex items-center gap-2">
+              <h3 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-2">
                 <Network className="w-4 h-4" />
                 Connect Miners to Translator Endpoint
               </h3>
-              <p className="text-sm text-green-200/90 mb-3">
-                Translator Proxy will be running on port <code className="text-xs font-mono bg-black/20 px-1.5 py-0.5 rounded">34255</code>. Edit your mining device(s) configuration, adding the line:
+              <p className="text-sm text-muted-foreground mb-3">
+                Translator Proxy will be running on port <code className="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">34255</code>. Edit your mining device(s) configuration, adding the line:
               </p>
-              <div className="bg-black/20 rounded p-3 mb-4">
-                <code className="text-sm font-mono text-green-100 block">
+              <div className="bg-muted rounded p-3 mb-4">
+                <code className="text-sm font-mono text-foreground block">
                   stratum+tcp://&lt;host-ip&gt;:34255
                 </code>
               </div>
               <button
                 onClick={() => setShowCpuMiner(!showCpuMiner)}
-                className="w-full flex items-center justify-center gap-2 text-sm font-medium text-green-100 bg-green-500/20 hover:bg-green-500/30 border border-green-400/30 rounded-lg px-4 py-3 transition-all"
+                className="w-full flex items-center justify-center gap-2 text-sm font-medium text-foreground bg-muted hover:bg-accent border border-border rounded-xl px-4 py-3 transition-all"
               >
                 <Cpu className="w-4 h-4" />
                 {showCpuMiner ? (
@@ -218,26 +218,26 @@ cd docker`}
       )}
 
       {showCpuMiner && (
-        <div className="rounded-lg border border-blue-500/30 bg-blue-500/10 p-4">
+        <div className="rounded-2xl border border-border bg-card p-4">
           <div className="flex items-start gap-3">
-            <Cpu className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
+            <Cpu className="w-5 h-5 text-info mt-0.5 flex-shrink-0" />
             <div className="flex-1 space-y-3">
-              <h3 className="text-sm font-semibold text-blue-100">
+              <h3 className="text-sm font-semibold text-foreground">
                 CPU Miner
               </h3>
-              <p className="text-sm text-blue-200/90">
+              <p className="text-sm text-muted-foreground">
                 If you don't have a physical miner, you can do tests with CPUMiner.
               </p>
               <div className="space-y-3">
                 <div>
-                  <p className="text-xs text-blue-200/80 mb-1 font-semibold">Setup the correct CPUMiner for your OS:</p>
-                  <ul className="text-xs text-blue-200/80 space-y-1 ml-4 list-disc">
-                    <li>You can download the binary directly from <a href="https://sourceforge.net/projects/cpuminer/files/" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-200 underline">here</a>;</li>
-                    <li>Or compile it from <a href="https://github.com/pooler/cpuminer" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-blue-200 underline">https://github.com/pooler/cpuminer</a></li>
+                  <p className="text-xs text-muted-foreground mb-1 font-semibold">Setup the correct CPUMiner for your OS:</p>
+                  <ul className="text-xs text-muted-foreground space-y-1 ml-4 list-disc">
+                    <li>You can download the binary directly from <a href="https://sourceforge.net/projects/cpuminer/files/" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 underline">here</a>;</li>
+                    <li>Or compile it from <a href="https://github.com/pooler/cpuminer" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 underline">https://github.com/pooler/cpuminer</a></li>
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs text-blue-200/80 mb-1 font-semibold">On the CPUMiner directory:</p>
+                  <p className="text-xs text-muted-foreground mb-1 font-semibold">On the CPUMiner directory:</p>
                   <CodeBlock
                     label="Run cpuminer"
                     code={`./minerd -a sha256d -o stratum+tcp://localhost:34255 -q -D -P`}

@@ -57,8 +57,8 @@ export const TranslatorProxyConfigForm = ({ data, updateData, onContinue }: any)
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-md mx-auto">
-      <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-6">
+    <form onSubmit={handleSubmit} className="space-y-8 max-w-md mx-auto">
+      <div className="bg-card border border-border rounded-2xl p-4 mb-6">
          <h3 className="text-primary font-semibold flex items-center gap-2 mb-2">
            <Network className="w-4 h-4" /> Translator Proxy Configuration
          </h3>
@@ -75,7 +75,6 @@ export const TranslatorProxyConfigForm = ({ data, updateData, onContinue }: any)
           value={userIdentity} 
           onChange={(e) => setUserIdentity(e.target.value)}
           required
-          className="bg-black/20 border-white/10"
         />
         <p className="text-xs text-muted-foreground">
           {constructTemplates === true 
@@ -84,7 +83,7 @@ export const TranslatorProxyConfigForm = ({ data, updateData, onContinue }: any)
         </p>
       </div>
 
-      <div className="w-full space-y-2 border border-white/10 rounded-lg bg-white/5 p-4">
+      <div className="w-full space-y-2 border border-border rounded-lg bg-muted p-4">
         <button 
           type="button"
           onClick={() => setIsOpen(!isOpen)}
@@ -109,8 +108,7 @@ export const TranslatorProxyConfigForm = ({ data, updateData, onContinue }: any)
                 placeholder="100" 
                 value={minIndividualMinerHashrateTh} 
                 onChange={(e) => setMinIndividualMinerHashrateTh(parseFloat(e.target.value) || 0)}
-                className="bg-black/20 border-white/10"
-              />
+                    />
               <p className="text-xs text-muted-foreground">
                 Minimum hashrate threshold for individual miners, expressed in Th/s.
               </p>
@@ -124,7 +122,7 @@ export const TranslatorProxyConfigForm = ({ data, updateData, onContinue }: any)
                   id="aggregateChannels"
                   checked={aggregateChannels}
                   onChange={(e) => setAggregateChannels(e.target.checked)}
-                  className="w-4 h-4 rounded border-white/20 bg-black/20 text-primary focus:ring-primary focus:ring-offset-0 focus:ring-2"
+                  className="w-4 h-4 rounded border-border bg-background text-primary focus:ring-primary focus:ring-offset-0 focus:ring-2"
                 />
                 <label htmlFor="aggregateChannels" className="text-sm text-muted-foreground">
                   Enable channel aggregation
@@ -141,8 +139,7 @@ export const TranslatorProxyConfigForm = ({ data, updateData, onContinue }: any)
                 step="0.1"
                 value={sharesPerMinute} 
                 onChange={(e) => setSharesPerMinute(parseFloat(e.target.value) || 0)}
-                className="bg-black/20 border-white/10"
-              />
+                    />
               <p className="text-xs text-muted-foreground">Target number of shares per minute.</p>
             </div>
 
@@ -153,7 +150,7 @@ export const TranslatorProxyConfigForm = ({ data, updateData, onContinue }: any)
                 placeholder={defaultAuthorityPubkey}
                 value={upstreamAuthorityPubkey} 
                 onChange={(e) => setUpstreamAuthorityPubkey(e.target.value)}
-                className="bg-black/20 border-white/10 font-mono text-sm"
+                className="font-mono text-sm"
               />
               <p className="text-xs text-muted-foreground">
                 Authority public key of the upstream (JDC or Pool) that the translator connects to.
