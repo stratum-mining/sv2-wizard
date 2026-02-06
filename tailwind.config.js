@@ -4,20 +4,39 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
     "./demo/src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["'Inter'", "system-ui", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+        mono: ["'JetBrains Mono'", "monospace"],
+      },
       colors: {
-        primary: "var(--primary)",
-        "primary-foreground": "var(--primary-foreground)",
-        muted: "var(--muted)",
-        "muted-foreground": "var(--muted-foreground)",
-        card: "var(--card)",
-        "card-foreground": "var(--card-foreground)",
-        border: "var(--border)",
-        background: "var(--background)",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: "hsl(var(--primary))",
+        "primary-foreground": "hsl(var(--primary-foreground))",
+        muted: "hsl(var(--muted))",
+        "muted-foreground": "hsl(var(--muted-foreground))",
+        accent: "hsl(var(--accent))",
+        card: "hsl(var(--card))",
+        "card-foreground": "hsl(var(--card-foreground))",
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        // Semantic status colors
+        success: "hsl(var(--success))",
+        "success-foreground": "hsl(var(--success-foreground))",
+        info: "hsl(var(--info))",
+        "info-foreground": "hsl(var(--info-foreground))",
+        warning: "hsl(var(--warning))",
+        "warning-foreground": "hsl(var(--warning-foreground))",
+      },
+      borderRadius: {
+        xl: "1rem",
+        "2xl": "1.5rem",
       },
     },
   },
   plugins: [],
-}
-
+};

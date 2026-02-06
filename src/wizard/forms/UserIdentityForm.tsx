@@ -27,8 +27,8 @@ export const UserIdentityForm = ({ data, updateData, onContinue }: { data?: any,
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-md mx-auto">
-      <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-6">
+    <form onSubmit={handleSubmit} className="space-y-8 max-w-md mx-auto">
+      <div className="bg-card border border-border rounded-2xl p-4 mb-6">
          <h3 className="text-primary font-semibold flex items-center gap-2 mb-2">
            <Cpu className="w-4 h-4" /> Pool Account Configuration
          </h3>
@@ -45,7 +45,7 @@ export const UserIdentityForm = ({ data, updateData, onContinue }: { data?: any,
           value={username} 
           onChange={(e) => setUsername(e.target.value)}
           required
-          className="bg-black/20 border-white/10"
+
         />
         <p className="text-xs text-muted-foreground">Your account username on the pool (user_identity field).</p>
       </div>
@@ -58,7 +58,7 @@ export const UserIdentityForm = ({ data, updateData, onContinue }: { data?: any,
           value={signature} 
           onChange={(e) => setSignature(e.target.value)}
           required
-          className="bg-black/20 border-white/10"
+
         />
         <p className="text-xs text-muted-foreground">Your signature that will appear on found blocks.</p>
       </div>
@@ -72,7 +72,7 @@ export const UserIdentityForm = ({ data, updateData, onContinue }: { data?: any,
             value={address} 
             onChange={(e) => setAddress(e.target.value)}
             required
-            className="bg-black/20 border-white/10"
+  
           />
           <p className="text-xs text-muted-foreground">Bitcoin address used only as last resort for solo-mining (coinbase_reward_script in JDC config).</p>
         </div>

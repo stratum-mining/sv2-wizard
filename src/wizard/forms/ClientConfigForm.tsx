@@ -37,8 +37,8 @@ export const ClientConfigForm = ({ data, updateData, onContinue }: any) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-md mx-auto">
-      <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-6">
+    <form onSubmit={handleSubmit} className="space-y-8 max-w-md mx-auto">
+      <div className="bg-card border border-border rounded-2xl p-4 mb-6">
          <h3 className="text-primary font-semibold flex items-center gap-2 mb-2">
            <Cpu className="w-4 h-4" /> Miner Configuration
          </h3>
@@ -55,7 +55,7 @@ export const ClientConfigForm = ({ data, updateData, onContinue }: any) => {
           value={userIdentity} 
           onChange={(e) => setUserIdentity(e.target.value)}
           required
-          className="bg-black/20 border-white/10"
+
         />
         <p className="text-xs text-muted-foreground">Username of your account with the pool, used to open channels with the Pool.</p>
       </div>
@@ -68,7 +68,7 @@ export const ClientConfigForm = ({ data, updateData, onContinue }: any) => {
           value={jdcSignature} 
           onChange={(e) => setJdcSignature(e.target.value)}
           required
-          className="bg-black/20 border-white/10"
+
         />
         <p className="text-xs text-muted-foreground">String that will be added to the coinbase transaction.</p>
       </div>
@@ -81,12 +81,12 @@ export const ClientConfigForm = ({ data, updateData, onContinue }: any) => {
           value={coinbaseRewardScript} 
           onChange={(e) => setCoinbaseRewardScript(e.target.value)}
           required
-          className="bg-black/20 border-white/10"
+
         />
         <p className="text-xs text-muted-foreground">Bitcoin address used by Job Declarator Client as last resort after fallback to solo-mining.</p>
       </div>
 
-      <div className="w-full space-y-2 border border-white/10 rounded-lg bg-white/5 p-4">
+      <div className="w-full space-y-2 border border-border rounded-lg bg-muted p-4">
         <button 
           type="button"
           onClick={() => setIsOpen(!isOpen)}
@@ -110,7 +110,7 @@ export const ClientConfigForm = ({ data, updateData, onContinue }: any) => {
                     type="number"
                     value={feeThreshold} 
                     onChange={(e) => setFeeThreshold(parseInt(e.target.value) || 0)}
-                    className="bg-black/20 border-white/10"
+          
                   />
                   <p className="text-xs text-muted-foreground">Minimum fee threshold to trigger new templates from the node.</p>
                </div>
@@ -121,7 +121,7 @@ export const ClientConfigForm = ({ data, updateData, onContinue }: any) => {
                     type="number"
                     value={minInterval} 
                     onChange={(e) => setMinInterval(parseInt(e.target.value) || 0)}
-                    className="bg-black/20 border-white/10"
+          
                   />
                   <p className="text-xs text-muted-foreground">Minimum interval (seconds) for generating templates to avoid overloading clients.</p>
                </div>
@@ -134,7 +134,7 @@ export const ClientConfigForm = ({ data, updateData, onContinue }: any) => {
                     type="number"
                     value={shareBatchSize} 
                     onChange={(e) => setShareBatchSize(parseInt(e.target.value))}
-                    className="bg-black/20 border-white/10"
+          
                   />
                   <p className="text-xs text-muted-foreground">How many shares do we want to acknowledge in a batch.</p>
              </div>

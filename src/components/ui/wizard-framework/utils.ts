@@ -19,12 +19,12 @@ export const getIcon = (name?: string, direct?: React.ElementType): React.Elemen
 export const getBadgeClasses = (color?: WizardOption["badgeColor"]) => {
   switch (color) {
     case "green":
-      return "bg-green-500/10 text-green-300 border-green-500/20";
+      return "bg-success/10 text-success-foreground border-success/20";
     case "blue":
-      return "bg-sky-500/10 text-sky-300 border-sky-500/20";
+      return "bg-info/10 text-info-foreground border-info/20";
     case "orange":
     default:
-      return "bg-orange-500/10 text-orange-300 border-orange-500/20";
+      return "bg-warning/10 text-warning-foreground border-warning/20";
   }
 };
 

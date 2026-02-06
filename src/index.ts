@@ -8,3 +8,6 @@ export * from "./wizard";
 // Wizard framework
 export { Wizard, type WizardConfig, type WizardStep, type WizardOption, type StepId } from "./components/ui/wizard-framework";
 
+// Theme
+export { useTheme, ThemeProvider } from './hooks';
+

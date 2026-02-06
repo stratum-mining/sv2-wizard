@@ -44,8 +44,8 @@ export const BitcoinSetupContent = ({
   };
 
   return (
-    <div className="space-y-6">
-      <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+    <div className="space-y-8">
+      <div className="bg-card border border-border rounded-2xl p-4">
         <h3 className="text-primary font-semibold flex items-center gap-2 mb-2">
           <HardDrive className="w-4 h-4" /> Bitcoin Core Setup Required
         </h3>
@@ -96,17 +96,17 @@ export const BitcoinSetupContent = ({
       </div>
 
       {showBitcoinConf && (
-        <div className="border border-primary/20 rounded-lg p-6 bg-primary/5">
+        <div className="border-border bg-card rounded-2xl border p-6">
           <h3 className="text-primary font-semibold flex items-center gap-2 mb-4">
             <Settings className="w-4 h-4" /> Bitcoin Configuration File
           </h3>
           <p className="text-sm text-muted-foreground mb-4">
-            <strong>Important:</strong> Add these settings to your <code className="text-primary">bitcoin.conf</code> file <strong>before</strong> launching the node. These RPC settings are required for JDS when miners want to use JD protocol and create their own block templates.
+            <strong>Important:</strong> Add these settings to your <code className="text-xs font-mono bg-muted px-1.5 py-0.5 rounded">bitcoin.conf</code> file <strong>before</strong> launching the node. These RPC settings are required for JDS when miners want to use JD protocol and create their own block templates.
           </p>
           <div className="space-y-3">
             <div>
               <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-2">bitcoin.conf location</span>
-              <code className="block bg-black/30 px-3 py-2 rounded text-sm font-mono text-primary/90">
+              <code className="block bg-muted px-3 py-2 rounded text-sm font-mono text-foreground">
                 {isMacOS() 
                   ? "~/Library/Application Support/Bitcoin/bitcoin.conf"
                   : "~/.bitcoin/bitcoin.conf"}
@@ -127,7 +127,7 @@ rpcallowip=0.0.0.0/0`}
         </div>
       )}
 
-      <div className="border border-primary/20 rounded-lg p-6 bg-primary/5">
+      <div className="border-border bg-card rounded-2xl border p-6">
         <h3 className="text-primary font-semibold flex items-center gap-2 mb-4">
           <Play className="w-4 h-4" /> Start Bitcoin Core Node
         </h3>
@@ -145,10 +145,10 @@ rpcallowip=0.0.0.0/0`}
       </div>
 
       {!nodeStarted ? (
-        <div className="border border-white/10 rounded-lg p-6 bg-white/5">
+        <div className="border border-border rounded-2xl p-6 bg-card">
           <div className="text-center space-y-4">
             <div>
-              <h4 className="text-lg font-semibold text-white mb-2">Confirm Node Startup</h4>
+              <h4 className="text-lg font-semibold text-foreground mb-2">Confirm Node Startup</h4>
               <p className="text-sm text-muted-foreground">
                 Once you've started your Bitcoin Core node with the command above, click below to continue.
               </p>
@@ -168,7 +168,7 @@ rpcallowip=0.0.0.0/0`}
           </div>
         </div>
       ) : (
-        <div className="border border-primary/20 rounded-lg p-6 bg-primary/5">
+        <div className="border-border bg-card rounded-2xl border p-6">
           <h3 className="text-primary font-semibold flex items-center gap-2 mb-4">
             <HardDrive className="w-4 h-4" /> Bitcoin Core Configuration
           </h3>
@@ -178,7 +178,7 @@ rpcallowip=0.0.0.0/0`}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="dataDir" className="text-white font-medium">
+              <Label htmlFor="dataDir" className="text-foreground font-medium">
                 Custom Bitcoin Data Directory <span className="text-muted-foreground">(Optional)</span>
               </Label>
               <Input 
@@ -186,7 +186,7 @@ rpcallowip=0.0.0.0/0`}
                 placeholder="/custom/bitcoin/data"
                 value={dataDir} 
                 onChange={(e) => setDataDir(e.target.value)}
-                className="bg-white/5 border-2 border-white/30 font-mono text-sm text-white placeholder:text-muted-foreground/70 focus:border-primary focus:ring-2 focus:ring-primary/50 hover:border-white/50 hover:bg-white/10 transition-all cursor-text"
+                className="font-mono text-sm"
               />
               <p className="text-xs text-muted-foreground">
                 Only specify if your Bitcoin Core data directory is in a non-default location. Leave empty if using the default path.

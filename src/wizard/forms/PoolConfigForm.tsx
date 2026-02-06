@@ -35,7 +35,7 @@ export const PoolConfigForm = ({ data, updateData, onContinue }: any) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-md mx-auto">
+    <form onSubmit={handleSubmit} className="space-y-8 max-w-md mx-auto">
       <div className="space-y-2">
         <Label htmlFor="poolSignature">Pool Signature <span className="text-primary">*</span></Label>
         <Input 
@@ -44,7 +44,7 @@ export const PoolConfigForm = ({ data, updateData, onContinue }: any) => {
           value={poolSignature} 
           onChange={(e) => setPoolSignature(e.target.value)}
           required
-          className="bg-black/20 border-white/10"
+
         />
         <p className="text-xs text-muted-foreground">String included in the coinbase transaction.</p>
       </div>
@@ -57,14 +57,14 @@ export const PoolConfigForm = ({ data, updateData, onContinue }: any) => {
           value={payoutAddress} 
           onChange={(e) => setPayoutAddress(e.target.value)}
           required
-          className="bg-black/20 border-white/10"
+
         />
         <p className="text-xs text-muted-foreground">
           Bitcoin address that will collect the block reward in the coinbase transaction.
         </p>
       </div>
 
-      <div className="w-full space-y-2 border border-white/10 rounded-lg bg-white/5 p-4">
+      <div className="w-full space-y-2 border border-border rounded-lg bg-muted p-4">
         <button 
           type="button"
           onClick={() => setIsOpen(!isOpen)}
@@ -88,7 +88,7 @@ export const PoolConfigForm = ({ data, updateData, onContinue }: any) => {
                     type="number"
                     value={feeThreshold} 
                     onChange={(e) => setFeeThreshold(parseInt(e.target.value) || 0)}
-                    className="bg-black/20 border-white/10"
+          
                   />
                   <p className="text-xs text-muted-foreground">Minimum fee threshold to trigger new templates from the node.</p>
                </div>
@@ -99,7 +99,7 @@ export const PoolConfigForm = ({ data, updateData, onContinue }: any) => {
                     type="number"
                     value={minInterval} 
                     onChange={(e) => setMinInterval(parseInt(e.target.value) || 0)}
-                    className="bg-black/20 border-white/10"
+          
                   />
                   <p className="text-xs text-muted-foreground">Minimum interval (seconds) for generating templates to avoid overloading clients.</p>
                </div>
@@ -112,7 +112,7 @@ export const PoolConfigForm = ({ data, updateData, onContinue }: any) => {
                     type="number"
                     value={shareBatchSize} 
                     onChange={(e) => setShareBatchSize(parseInt(e.target.value))}
-                    className="bg-black/20 border-white/10"
+          
                   />
                   <p className="text-xs text-muted-foreground">How many shares do we want to acknowledge in a batch.</p>
              </div>
